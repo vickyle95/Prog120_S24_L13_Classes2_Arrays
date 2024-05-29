@@ -16,28 +16,30 @@ namespace Prog120_S24_L13_Classes2_Arrays
         {
             Preload();
 
-            int ogArraySize = foodItems.Length;
+            FoodItem kiwi = new FoodItem("Kiwi", 1, 42);
 
-            Console.WriteLine($"Original Array Size: {foodItems.Length}");
+            try
+            {
+                AddNewFoodItem(kiwi);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             DoubleArraySize();
 
-            int doubleArraySize = ogArraySize * 2;
-            bool isArraySizeDouble = doubleArraySize == foodItems.Length;
+            AddNewFoodItem(kiwi);
 
-            if(isArraySizeDouble)
+            foreach (FoodItem singleFoodItem in foodItems)
             {
-                Console.WriteLine("The array size has doubled");
-                
-                foreach (FoodItem singleitem in foodItems)
+                if(singleFoodItem != null)
                 {
-                    Console.WriteLine(singleitem.DisplayFoodInformation());
+                    Console.WriteLine(singleFoodItem.DisplayFoodInformation());
                 }
+               
             }
-            else
-            {
-                Console.WriteLine("The array size did not double");
-            }
+            
 
 
             // foreach (Type variablename in collection)
@@ -47,6 +49,29 @@ namespace Prog120_S24_L13_Classes2_Arrays
             //}
 
         } // Main
+
+        public static void AddNewFoodItem(FoodItem newFoodItem)
+        {
+            // Loop through my food Item Array
+            // Check for an empty spot
+            // If and empty spot is found, add to space
+            // else return error no space found
+
+            for (int i = 0; i < foodItems.Length; i++)
+            {
+                // Check for an empty spot
+                if (foodItems[i] == null)
+                {
+                    // If an mepty spot is found, add to space
+                    foodItems[i] = newFoodItem;
+                    // You can use the return keyword in a method that is void. To leave the method
+                    return;
+                }
+
+            }
+            // Throw a new exception
+            throw new Exception("No more room in the array");
+        }
 
         // DoubleArraySize()
         public static void DoubleArraySize()
@@ -67,6 +92,41 @@ namespace Prog120_S24_L13_Classes2_Arrays
 
         } // DoubleArraySize()
 
+        public static void DoubleArraySizeExample()
+        {
+            int ogArraySize = foodItems.Length;
+
+            Console.WriteLine($"Original Array Size: {foodItems.Length}");
+
+            DoubleArraySize();
+
+            int doubleArraySize = ogArraySize * 2;
+            bool isArraySizeDouble = doubleArraySize == foodItems.Length;
+
+            if (isArraySizeDouble)
+            {
+                Console.WriteLine("The array size has doubled");
+
+                foreach (FoodItem singleitem in foodItems)
+                {
+                    // How do we prevent a null exception error
+                    // We check to see if something is not null
+
+                    if (singleitem != null)
+                    {
+                        Console.WriteLine(singleitem.DisplayFoodInformation());
+                    }
+                    else
+                    {
+                        Console.WriteLine("Item Not Found");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("The array size did not double");
+            }
+        } // DoubleArraySizeExample
         public static void Preload()
         {
             // Apple  7  95  665
